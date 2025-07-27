@@ -1,0 +1,23 @@
+Labial = p|ph|b|bh|m|v;
+Dental = t|th|d|dh|n|s|l;
+Retroflex = ṭ|ṭh|ḍ|ḍh|ṇ|ṣ|r;
+Palatal = c|ch|j|jh|ñ|ś|y;
+Velar = k|kh|g|gh|ṅ;
+Stop = p|ph|b|bh|t|th|d|dh|ṭ|ṭh|ḍ|ḍh|c|ch|j|jh|k|kh|g|gh;
+Fricative = s|ṣ|ś;
+Obstruent = Stop | Fricative;
+C = Labial|Dental|Retroflex|Palatal|Velar|H|ḥ;
+ShortVowel = [a|i|u];
+LongVowel = [ā|ī|ū|e|o];
+V = ShortVowel|LongVowel;
+FinalConsonants = C+ -> 0 || C _ .#.;
+SBetweenCons = s -> 0 || Obstruent _ Obstruent;
+SCerebralization = s -> ṣ || [k|r|[V - [a|ā]]](ṃ|ḥ) _ ~r;
+Depalatalization = c -> k, j -> g || _ [s|t|th|dh];
+Deaspiration = kh -> k, ṭh -> ṭ, th -> t, ph -> p || _ [s|t|th|dh];
+Devoicing = g -> k, ḍ -> ṭ, d -> t, b -> p || _ [s|t|th|s];
+Voicing = k -> g, ṭ -> ḍ, t -> d, p -> b || _ d;
+VoicedAspiratesBeforeS = gh -> k, ḍh -> ṭ, dh -> t, bh -> p || _ s;
+AccentMark = %/ -> "́";
+InternalSandhi = FinalConsonants .o. SBetweenCons .o. Depalatalization .o. Deaspiration .o. Devoicing
+.o. Voicing .o. VoicedAspiratesBeforeS .o. SCerebralization .o. AccentMark;
